@@ -114,12 +114,12 @@ void go(int x,int pwm)
 	n=pwm+x;
 	if(m<0)
 		m=0;
-	if(m>500)
-		m=500;
+	if(m>600)
+		m=600;
 	if(n<0)
 		n=0;
-	if(n>500)
-		n=500;
+	if(n>600)
+		n=600;
 //	Pulse(m,n);
 	TIM3->CCR1=m;
 	TIM3->CCR3=n;

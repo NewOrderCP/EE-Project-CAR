@@ -44,3 +44,4 @@
 .\obj\main.o: ..\HARDWARE\USART2\usart2.h
 .\obj\main.o: ..\HARDWARE\HC05\hc05.h
 .\obj\main.o: ..\HARDWARE\KEY\key.h
+.\obj\main.o: ..\HARDWARE\HMC\HMC5883L.h

@@ -28,6 +28,7 @@
 ".\obj\usart2.o"
 ".\obj\key.o"
 ".\obj\hc05.o"
+".\obj\hmc5883l.o"
 --strict --scatter ".\Obj\project.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

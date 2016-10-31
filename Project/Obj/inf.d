@@ -35,3 +35,4 @@
 .\obj\inf.o: ..\User\delay.h
 .\obj\inf.o: ..\HARDWARE\TIMER\timer.h
 .\obj\inf.o: ..\User\MPU6050.h
+.\obj\inf.o: ..\HARDWARE\HMC\HMC5883L.h

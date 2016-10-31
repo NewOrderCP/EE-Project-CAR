@@ -15,16 +15,14 @@
 #include "usart2.h"
 #include "hc05.h"
 #include "key.h"
+#include "HMC5883L.h"
 
 struct PID Control={18,0,10,0,0,0,0,0,0};
 extern int times;
-int times1,times2;
-float tempv;
+int times1,times2,time_now;
 float k1=0,k2;
 
-u8 Statue = 1;			//各类返回值判断
-int one[4];
-
+extern float angle;
 
 int main(void)
 {
@@ -48,6 +46,8 @@ int main(void)
 	uart_init(9600);					//串口初始化
 	Adc_Init();				
 	I2C_Configuration();
+	I2C_GPIO_Config();
+	Init_HMC5883L();
 	OLED_Init();						//OLED初始化
 	OLED_Fill(0x00);					//OLED全屏灭
 	
@@ -66,6 +66,7 @@ int main(void)
 	
 		while(1)
 		{
+			//电压检测
 			adcx=Get_Adc_Average(ADC_Channel_4,10); 
 			temp=(float)adcx*(3.3/4096);
 			adcx=temp;
@@ -73,27 +74,39 @@ int main(void)
 			temp*=100;
 			sprintf((char*)display2,"VOLTAGE:%02d.%02d V",adcx,(int)temp);
 			
+			//时间检测
 			times1=times/10;
-			times2=times-times1*10;
-					
+			times2=times-times1*10;	
 			sprintf((char*)display1,"TIMES:%03d.%d s",times1,times2);
 		
+			//电压时间显示
 			OLED_ShowStr(0,2,display1,2);				
 			OLED_ShowStr(0,4,display2,2);		
-//			OLED_ShowStr(0,4,display3,2);	
 		
+			//蓝牙接收显示
 			if(USART2_RX_STA&0X8000)			//接收到一次数据了
 			{
 
 				reclen=USART2_RX_STA&0X7FFF;	//得到数据长度
 				USART2_RX_BUF[reclen]=0;	 	//加入结束符
-
-				USART2_RX_STA=0;	 
+				USART2_RX_STA=0;
+				OLED_ShowStr(0,0,USART2_RX_BUF,2);				
 			}
-
-			OLED_ShowStr(0,0,USART2_RX_BUF,2);
-
-
+			
+			//电子罗盘读取显示
+			read_hmc5883l();	
+			sprintf((char*)display3,"%f",angle);
+			OLED_ShowStr(0,6,display3,2);
+			
+			//小车运行路径规划
+			time_now=times;
+			while(times-time_now==100)
+			{
+				k1=dev(0);
+				k2=PID_calculate(&Control,k1);	
+				go(k2,200);	
+			}
+			
 		}
 		
 }
