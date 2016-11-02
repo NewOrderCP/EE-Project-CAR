@@ -89,7 +89,7 @@ int main(void)
 
 				reclen=USART2_RX_STA&0X7FFF;	//得到数据长度
 				USART2_RX_BUF[reclen]=0;	 	//加入结束符
-				USART2_RX_STA=0;
+				USART2_RX_STA=0;	
 				OLED_ShowStr(0,0,USART2_RX_BUF,2);				
 			}
 			

@@ -365,7 +365,7 @@ void read_hmc5883l(void)
 
        if(x>0x7fff)  x-=0xffff;	  
        if(y>0x7fff)  y-=0xffff;	  
-       angle= atan2(y,x) * (180 / 3.14159265) + 180; // angle in degrees
+       angle= atan2(y,x) * (180 / 3.14159265);// + 180; // angle in degrees
 }
 void Send_HMC5883L()
 {
