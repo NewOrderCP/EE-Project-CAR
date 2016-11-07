@@ -12,7 +12,8 @@
 unsigned char BUF[8];                         //接收数据缓存区
 char  test=0; 
 int   x,y;
-float angle;
+float angle,first_angle;
+int first=1;
 u8 ge,shi,bai,qian,wan,shiwan;           //显示变量
 int A_X,A_Y,A_Z;
 //***BMP085使用
@@ -366,6 +367,12 @@ void read_hmc5883l(void)
        if(x>0x7fff)  x-=0xffff;	  
        if(y>0x7fff)  y-=0xffff;	  
        angle= atan2(y,x) * (180 / 3.14159265);// + 180; // angle in degrees
+	   if(first==1)
+	   {
+			first_angle=angle;
+		    first=0;
+	   }
+	   angle=angle-first_angle;
 }
 void Send_HMC5883L()
 {

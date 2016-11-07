@@ -64,15 +64,15 @@ void USART2_Init(u32 bound)
 
  	USART_DeInit(USART2);  //复位串口1
 		 //USART2_TX   PA.2
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2; //PA.2
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;	//复用推挽输出
-  GPIO_Init(GPIOA, &GPIO_InitStructure); //初始化PA2
-   
-    //USART2_RX	  PA.3
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;//浮空输入
-  GPIO_Init(GPIOA, &GPIO_InitStructure);  //初始化PA3
+	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2; //PA.2
+	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;	//复用推挽输出
+	  GPIO_Init(GPIOA, &GPIO_InitStructure); //初始化PA2
+	   
+		//USART2_RX	  PA.3
+	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;//浮空输入
+	  GPIO_Init(GPIOA, &GPIO_InitStructure);  //初始化PA3
 	
 	USART_InitStructure.USART_BaudRate = bound;//一般设置为9600;
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;//字长为8位数据格式
@@ -84,7 +84,7 @@ void USART2_Init(u32 bound)
 	USART_Init(USART2, &USART_InitStructure); //初始化串口	2
   
 	//波特率设置
- //	USART2->BRR=(pclk1*1000000)/(bound);// 波特率设置	 
+	//	USART2->BRR=(pclk1*1000000)/(bound);// 波特率设置	 
 	//USART2->CR1|=0X200C;  	//1位停止,无校验位.
 	USART_DMACmd(USART2,USART_DMAReq_Tx,ENABLE);  	//使能串口2的DMA发送
 	UART_DMA_Config(DMA1_Channel7,(u32)&USART2->DR,(u32)USART2_TX_BUF);//DMA1通道7,外设为串口2,存储器为USART2_TX_BUF 

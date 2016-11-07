@@ -70,6 +70,7 @@ void Pulse(int m1,int m2)
 		{	
 			TIM3->CCR1=0;
 			TIM3->CCR2=0;
+			delay_ms(10);
 			t1=1;
 		}
 		TIM3->CCR1=m1;
@@ -80,6 +81,7 @@ void Pulse(int m1,int m2)
 		{
 			TIM3->CCR1=0;
 			TIM3->CCR2=0;
+			delay_ms(10);
 			t1=0;
 		}
 		TIM3->CCR3=-m1;
@@ -91,6 +93,7 @@ void Pulse(int m1,int m2)
 		{
 			TIM3->CCR3=0;
 			TIM3->CCR4=0;
+			delay_ms(10);
 			t2=1;
 		}
 		TIM3->CCR3=m2;
@@ -101,6 +104,7 @@ void Pulse(int m1,int m2)
 		{
 			TIM3->CCR3=0;
 			TIM3->CCR4=0;
+			delay_ms(10);
 			t2=0;
 		}
 		TIM3->CCR4=-m2;
@@ -112,15 +116,15 @@ void go(int x,int pwm)
 	int m,n;
 	m=pwm-x;
 	n=pwm+x;
-	if(m<0)
-		m=0;
-	if(m>600)
-		m=600;
-	if(n<0)
-		n=0;
-	if(n>600)
-		n=600;
-//	Pulse(m,n);
-	TIM3->CCR1=m;
-	TIM3->CCR3=n;
+	if(m<-1000)
+		m=-1000;
+	if(m>1000)
+		m=1000;
+	if(n<-1000)
+		n=-1000;
+	if(n>1000)
+		n=1000;
+	Pulse(m,n);
+//	TIM3->CCR1=m;
+//	TIM3->CCR3=n;
 }

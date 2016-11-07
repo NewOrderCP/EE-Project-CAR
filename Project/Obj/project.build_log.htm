@@ -26,16 +26,33 @@ Project File Date:  10/31/2016
 
 <h2>Output:</h2>
 Build target 'GPIO'
+compiling main.c...
+..\HARDWARE\HMC\HMC5883L.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\User\main.c(30): warning:  #177-D: variable "t" was declared but never referenced
+        u8 t;
+..\User\main.c(31): warning:  #177-D: variable "key" was declared but never referenced
+        u8 key;
+..\User\main.c(33): warning:  #177-D: variable "sendbuf" was declared but never referenced
+        u8 sendbuf[20];   
+..\User\main.c(37): warning:  #177-D: variable "i" was declared but never referenced
+        unsigned char i;
+..\User\main.c(42): warning:  #177-D: variable "display4" was declared but never referenced
+        u8 display4[16];
+..\User\main.c: 6 warnings, 0 errors
+compiling motor.c...
+compiling PID.C...
+compiling usart2.c...
 compiling HMC5883L.c...
 ..\HARDWARE\HMC\HMC5883L.h(9): warning:  #1-D: last line of file ends without a newline
   #endif
-..\HARDWARE\HMC\HMC5883L.c(27): warning:  #68-D: integer conversion resulted in a change of sign
+..\HARDWARE\HMC\HMC5883L.c(28): warning:  #68-D: integer conversion resulted in a change of sign
   short mb=32768;
 ..\HARDWARE\HMC\HMC5883L.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=27434 RO-data=3086 RW-data=1424 ZI-data=2032  
+Program Size: Code=28070 RO-data=3082 RW-data=1440 ZI-data=2032  
 FromELF: creating hex file...
-".\Obj\project.axf" - 0 Error(s), 2 Warning(s).
+".\Obj\project.axf" - 0 Error(s), 8 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   C:\Users\TF-PC\Desktop\EE&NE\EE-Project-CAR\Project\RTE

@@ -1,8 +1,8 @@
 #include "PID.H"
 #include "stdio.h"
 #include "stm32f10x.h"
-float MaxValue=800;//输出最大限幅
-float MinValue=-800;//输出最小限幅
+float MaxValue=1000;//输出最大限幅
+float MinValue=-1000;//输出最小限幅
 float CurrentValue_left;//采样值
 float CurrentValue_right;
 char temp1[32];
