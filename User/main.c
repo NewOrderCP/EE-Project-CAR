@@ -83,35 +83,6 @@ int main(void)
 			sprintf((char*)display1,"DIS: %f",dis1);
 			OLED_ShowStr(0,6,display1,2);	
 			
-//			time_now=times;
-//			while(times-time_now<40)
-//			{	
-//				k1=dev(0);
-//				k2=PID_calculate(&Control,k1);	
-//				go(k2,500);	
-//			}
-//			time_now=times;
-//			while(times-time_now<40)
-//			{	
-//				k1=dev(90);
-//				k2=PID_calculate(&Control,k1);	
-//				go(k2,500);	
-//			}
-//			time_now=times;
-//			while(times-time_now<40)
-//			{	
-//				k1=dev(180);
-//				k2=PID_calculate(&Control,k1);	
-//				go(k2,500);	
-//			}
-//			time_now=times;
-//			while(times-time_now<40)
-//			{	
-//				k1=dev(270);
-//				k2=PID_calculate(&Control,k1);	
-//				go(k2,500);	
-//			}
-			
 			
 			//蓝牙接收显示
 			if(USART2_RX_STA&0X8000)			//接收到一次数据了
@@ -120,7 +91,7 @@ int main(void)
 				reclen=USART2_RX_STA&0X7FFF;	//得到数据长度
 				USART2_RX_BUF[reclen]=0;	 	//加入结束符
 				USART2_RX_STA=0;
-				cmd=100*USART2_RX_BUF[0]+10*USART2_RX_BUF[1]+USART2_RX_BUF[2];	
+				cmd=100*(USART2_RX_BUF[0]-48)+10*(USART2_RX_BUF[1]-48)+(USART2_RX_BUF[2]-48);	
 				sprintf((char*)display1,"BT: %d",cmd);				
 				OLED_ShowStr(0,0,display1,2);				
 			}
@@ -128,12 +99,12 @@ int main(void)
 			//指令执行
 			switch(cmd)
 			{
-				case 0:								//方向0指令
+				case 100:								//方向0指令
 					k1=dev(0);
 					k2=PID_calculate(&Control,k1);	
 					go(k2,500);	
 					break;
-				case 90:							//方向90指令
+				case 190:							//方向90指令
 					k1=dev(90);
 					k2=PID_calculate(&Control,k1);	
 					go(k2,500);	
