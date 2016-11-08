@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_MD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CMSIS\CM3\CoreSupport;..\CMSIS\CM3\DeviceSupport\ST\STM32F10x;D:\keil\ARM\ARMCC\include;D:\keil\ARM\RV31\LIB\ST\STM32F10x_StdPeriph_Driver\inc;..\HARDWARE\CCD_ADC;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\LED;..\HARDWARE\TIMER;..\HARDWARE\PID;..\HARDWARE\EXTI;..\STM32F10x_StdPeriph_Driver\inc;..\User;..\HARDWARE\INF;..\HARDWARE\STEER;..\HARDWARE\WAVES;..\User\eMPL;..\HARDWARE\ADC;..\HARDWARE\LCD;..\HARDWARE\LED;..\HARDWARE\OLED;..\HARDWARE\LDC1314;..\HARDWARE\Filter;..\HARDWARE\I2C;..\HARDWARE\CRC8;..\HARDWARE\KEY;..\HARDWARE\HC05;..\HARDWARE\USART2;..\HARDWARE\HMC</IncludePath>
+              <IncludePath>..\CMSIS\CM3\CoreSupport;..\CMSIS\CM3\DeviceSupport\ST\STM32F10x;D:\keil\ARM\ARMCC\include;D:\keil\ARM\RV31\LIB\ST\STM32F10x_StdPeriph_Driver\inc;..\HARDWARE\CCD_ADC;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\LED;..\HARDWARE\TIMER;..\HARDWARE\PID;..\HARDWARE\EXTI;..\STM32F10x_StdPeriph_Driver\inc;..\User;..\HARDWARE\INF;..\HARDWARE\STEER;..\HARDWARE\WAVES;..\User\eMPL;..\HARDWARE\ADC;..\HARDWARE\LCD;..\HARDWARE\LED;..\HARDWARE\OLED;..\HARDWARE\LDC1314;..\HARDWARE\Filter;..\HARDWARE\I2C;..\HARDWARE\CRC8;..\HARDWARE\KEY;..\HARDWARE\HC05;..\HARDWARE\USART2;..\HARDWARE\HMC;..\HARDWARE\hc04</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -498,6 +498,11 @@
               <FileType>1</FileType>
               <FilePath>..\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f10x_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -523,11 +528,6 @@
         <Group>
           <GroupName>HARDWARD</GroupName>
           <Files>
-            <File>
-              <FileName>timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\TIMER\timer.c</FilePath>
-            </File>
             <File>
               <FileName>PID.C</FileName>
               <FileType>1</FileType>
@@ -579,9 +579,39 @@
               <FilePath>..\HARDWARE\HC05\hc05.c</FilePath>
             </File>
             <File>
-              <FileName>HMC5883L.c</FileName>
+              <FileName>MPU6050.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\HARDWARE\HMC\HMC5883L.c</FilePath>
+              <FilePath>..\User\MPU6050.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpuiic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\mpuiic.c</FilePath>
+            </File>
+            <File>
+              <FileName>oycq_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\oycq_delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\eMPL\inv_mpu.c</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu_dmp_motion_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\eMPL\inv_mpu_dmp_motion_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>hc04.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\hc04\hc04.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\TIMER\timer.c</FilePath>
             </File>
           </Files>
         </Group>

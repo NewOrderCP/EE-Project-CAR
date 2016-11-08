@@ -2,7 +2,7 @@
 .\obj\mpu6050.o: ..\User\mpu6050.h
 .\obj\mpu6050.o: ..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h
 .\obj\mpu6050.o: ..\CMSIS\CM3\CoreSupport\core_cm3.h
-.\obj\mpu6050.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\obj\mpu6050.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\obj\mpu6050.o: ..\CMSIS\CM3\DeviceSupport\ST\STM32F10x\system_stm32f10x.h
 .\obj\mpu6050.o: ..\User\stm32f10x_conf.h
 .\obj\mpu6050.o: ..\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
@@ -34,5 +34,6 @@
 .\obj\mpu6050.o: ..\User\eMPL\inv_mpu_dmp_motion_driver.h
 .\obj\mpu6050.o: ..\User\eMPL\inv_mpu.h
 .\obj\mpu6050.o: ..\User\usart.h
-.\obj\mpu6050.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\obj\mpu6050.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\obj\mpu6050.o: ..\User\mpuiic.h
+.\obj\mpu6050.o: ..\HARDWARE\OLED\OLED_I2C.h

@@ -15,10 +15,10 @@ float dev(int expect)
 	int yaw1=0;
 	float devout=0;
 	
-	if(angle<0)
-		yaw1=(int)angle+360;
+	if(yaw<0)
+		yaw1=(int)yaw+360;
 	else
-		yaw1=(int)angle;
+		yaw1=(int)yaw;
 	
 	devang=(yaw1-expect)%360;
 	

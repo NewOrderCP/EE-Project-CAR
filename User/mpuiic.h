@@ -1,8 +1,7 @@
 #ifndef __MPUIIC_H
 #define __MPUIIC_H
 #include "mpu6050.h"
-
-
+   		   
  	   		   
 //IO·½ÏòÉèÖÃ
 #define MPU_SDA_IN()  {GPIOB->CRH&=0XFFFF0FFF;GPIOB->CRH|=8<<12;}

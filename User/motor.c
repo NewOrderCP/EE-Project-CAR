@@ -21,7 +21,12 @@ void GPIO_Configuration(void)
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;       //复用推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
+	
+	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_9;	
+	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;       //推挽输出
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_ResetBits(GPIOB,GPIO_Pin_9);
 
 }
 
@@ -41,19 +46,19 @@ void PWM_Configuration(void)	 //配置PWM输出
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	
-  TIM_OCInitStructure.TIM_Pulse = 0;                                 //使能左电机（正转）
+  TIM_OCInitStructure.TIM_Pulse = 0;                           
   TIM_OC1Init(TIM3,&TIM_OCInitStructure);                     			
   TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
 	
-  TIM_OCInitStructure.TIM_Pulse = 0;                                 //使能左电机（反转）
+  TIM_OCInitStructure.TIM_Pulse = 0;                              
   TIM_OC2Init(TIM3,&TIM_OCInitStructure);                     			
   TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable);
 	
-  TIM_OCInitStructure.TIM_Pulse = 0;                                 //使能右电机（正转）
+  TIM_OCInitStructure.TIM_Pulse = 0;                           
   TIM_OC3Init(TIM3,&TIM_OCInitStructure);                     			
   TIM_OC3PreloadConfig(TIM3, TIM_OCPreload_Enable);
 	
-  TIM_OCInitStructure.TIM_Pulse = 0;                                 //使能右电机（反转）
+  TIM_OCInitStructure.TIM_Pulse = 0;                             
   TIM_OC4Init(TIM3,&TIM_OCInitStructure);                     			
   TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
  
@@ -70,7 +75,9 @@ void Pulse(int m1,int m2)
 		{	
 			TIM3->CCR1=0;
 			TIM3->CCR2=0;
+//			GPIO_ResetBits(GPIOA,GPIO_Pin_4);
 			delay_ms(10);
+//			GPIO_SetBits(GPIOA,GPIO_Pin_5);
 			t1=1;
 		}
 		TIM3->CCR1=m1;
@@ -81,10 +88,12 @@ void Pulse(int m1,int m2)
 		{
 			TIM3->CCR1=0;
 			TIM3->CCR2=0;
+//			GPIO_ResetBits(GPIOA,GPIO_Pin_5);
 			delay_ms(10);
+//			GPIO_SetBits(GPIOA,GPIO_Pin_4);
 			t1=0;
 		}
-		TIM3->CCR3=-m1;
+		TIM3->CCR2=-m1;
 	}
 	
 	if(m2>=0)
@@ -93,7 +102,9 @@ void Pulse(int m1,int m2)
 		{
 			TIM3->CCR3=0;
 			TIM3->CCR4=0;
+//			GPIO_ResetBits(GPIOA,GPIO_Pin_7);
 			delay_ms(10);
+//			GPIO_SetBits(GPIOA,GPIO_Pin_6);
 			t2=1;
 		}
 		TIM3->CCR3=m2;
@@ -104,7 +115,9 @@ void Pulse(int m1,int m2)
 		{
 			TIM3->CCR3=0;
 			TIM3->CCR4=0;
+//			GPIO_ResetBits(GPIOA,GPIO_Pin_6);
 			delay_ms(10);
+//			GPIO_SetBits(GPIOA,GPIO_Pin_7);
 			t2=0;
 		}
 		TIM3->CCR4=-m2;
@@ -114,8 +127,8 @@ void Pulse(int m1,int m2)
 void go(int x,int pwm)	
 {
 	int m,n;
-	m=pwm-x;
-	n=pwm+x;
+	m=pwm+x;
+	n=pwm-x;
 	if(m<-1000)
 		m=-1000;
 	if(m>1000)
@@ -125,6 +138,4 @@ void go(int x,int pwm)
 	if(n>1000)
 		n=1000;
 	Pulse(m,n);
-//	TIM3->CCR1=m;
-//	TIM3->CCR3=n;
 }

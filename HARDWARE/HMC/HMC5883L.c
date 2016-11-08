@@ -34,14 +34,14 @@ long  pressure;
 //********
  //************************************++++++++++++++++++++++++++++++++
 /*模拟IIC端口输出输入定义*/
-#define SCL_H         GPIOB->BSRR = GPIO_Pin_8
-#define SCL_L         GPIOB->BRR  = GPIO_Pin_8 
+#define SCL_H         GPIOA->BSRR = GPIO_Pin_10
+#define SCL_L         GPIOA->BRR  = GPIO_Pin_10
    
-#define SDA_H         GPIOB->BSRR = GPIO_Pin_9
-#define SDA_L         GPIOB->BRR  = GPIO_Pin_9
+#define SDA_H         GPIOA->BSRR = GPIO_Pin_9
+#define SDA_L         GPIOA->BRR  = GPIO_Pin_9
 
-#define SCL_read      GPIOB->IDR  & GPIO_Pin_8
-#define SDA_read      GPIOB->IDR  & GPIO_Pin_9
+#define SCL_read      GPIOA->IDR  & GPIO_Pin_10
+#define SDA_read      GPIOA->IDR  & GPIO_Pin_9
 
 
 void conversion(long temp_data)  
@@ -69,15 +69,15 @@ void I2C_GPIO_Config(void)
 {
   GPIO_InitTypeDef  GPIO_InitStructure; 
  
-  GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_8;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;  
-  GPIO_Init(GPIOB, &GPIO_InitStructure);
-
   GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_9;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;  
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+  GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_10;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
-  GPIO_Init(GPIOB, &GPIO_InitStructure);
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
 /*******************************************************************************
@@ -366,7 +366,7 @@ void read_hmc5883l(void)
 
        if(x>0x7fff)  x-=0xffff;	  
        if(y>0x7fff)  y-=0xffff;	  
-       angle= atan2(y,x) * (180 / 3.14159265);// + 180; // angle in degrees
+       angle= atan2(y,x) * (180 / 3.14159265)+ 180; // angle in degrees
 	   if(first==1)
 	   {
 			first_angle=angle;

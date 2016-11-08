@@ -32,10 +32,8 @@
 .\obj\main.o: ..\User\sys.h
 .\obj\main.o: ..\User\delay.h
 .\obj\main.o: ..\User\motor.h
-.\obj\main.o: ..\HARDWARE\TIMER\timer.h
 .\obj\main.o: ..\HARDWARE\PID\PID.H
 .\obj\main.o: ..\HARDWARE\INF\inf.h
-.\obj\main.o: ..\HARDWARE\EXTI\exti.h
 .\obj\main.o: ..\User\Usart.h
 .\obj\main.o: ..\HARDWARE\OLED\OLED_I2C.h
 .\obj\main.o: ..\HARDWARE\Filter\Fileter.h
@@ -44,4 +42,8 @@
 .\obj\main.o: ..\HARDWARE\USART2\usart2.h
 .\obj\main.o: ..\HARDWARE\HC05\hc05.h
 .\obj\main.o: ..\HARDWARE\KEY\key.h
-.\obj\main.o: ..\HARDWARE\HMC\HMC5883L.h
+.\obj\main.o: ..\User\mpuiic.h
+.\obj\main.o: ..\User\mpu6050.h
+.\obj\main.o: ..\User\oycq_delay.h
+.\obj\main.o: ..\HARDWARE\hc04\hc04.h
+.\obj\main.o: ..\HARDWARE\TIMER\timer.h

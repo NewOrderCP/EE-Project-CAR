@@ -5,7 +5,8 @@
 #include "usart.h"
 #include "inv_mpu.h"
 #include "stm32f10x.h"
-#include "mpuiic.h"   			
+#include "mpuiic.h"   
+#include "OLED_I2C.h"
 
 // #define UART_SEND_CONTROL 0
 // #define UART_RATE 500000
@@ -18,7 +19,9 @@
 //上述是全局变量，在中断程序被刷新，中断服务函数在初始化函数后面
 
 
-void mpu_exti_init(void);    
+void mpu_exti_init(void);
+
+u8 display5[16];
 
 //*******************************MPU6050初始化****************************//
 //初始化MPU6050并初始化DMP
@@ -55,25 +58,27 @@ u8 MPU_Init(int the_fifo_rate)
 //*****************************中断服务函数*****************************//
  //每当DMP准备好一组数据后，就进入这一个中断程序
  //中断启动的频率通过set_fiforate来控制
-void EXTI15_10_IRQHandler()   
+void EXTI9_5_IRQHandler()   
 {
 static unsigned char count_to_delay=0;
 count_to_delay=(count_to_delay+1)%50;
 
-if(EXTI_GetITStatus(EXTI_Line11))
+if(EXTI_GetITStatus(EXTI_Line8))
 {   
-   EXTI_ClearITPendingBit(EXTI_Line11);//清除中断  
+   EXTI_ClearITPendingBit(EXTI_Line8);//清除中断  
 
-		GPIO_SetBits(GPIOA,GPIO_Pin_12);
+//		GPIO_SetBits(GPIOA,GPIO_Pin_12);
+//		sprintf((char*)display5,"MPU");
+//		OLED_ShowStr(0,4,display5,2);
 
    MPU_Get_Accelerometer(&aacx,&aacy,&aacz);	//得到加速度传感器数据
    MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);	//得到陀螺仪数据
    mpu_dmp_get_data(&pitch,&roll,&yaw);    //得到姿态
- #ifdef UART_SEND_CONTROL
-   usart1_report_imu(aacx,aacy,aacz,gyrox,gyroy,gyroz,(int)(roll*100),(int)(pitch*100),(int)(yaw*10));	
- #endif    
- //如果需要串口调试，则传送姿态
-    GPIO_ResetBits(GPIOA,GPIO_Pin_12);
+// #ifdef UART_SEND_CONTROL
+//   usart1_report_imu(aacx,aacy,aacz,gyrox,gyroy,gyroz,(int)(roll*100),(int)(pitch*100),(int)(yaw*10));	
+// #endif    
+// //如果需要串口调试，则传送姿态
+//    GPIO_ResetBits(GPIOA,GPIO_Pin_12);
 }
 
 }
@@ -89,25 +94,25 @@ NVIC_InitTypeDef  NVIC_InitStruct;
 RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);  //GPIOA   
 
 GPIO_InitStruct.GPIO_Mode=GPIO_Mode_IPU;
-GPIO_InitStruct.GPIO_Pin= GPIO_Pin_11;      //PIN11  
+GPIO_InitStruct.GPIO_Pin= GPIO_Pin_8;      //PIN8 
 GPIO_InitStruct.GPIO_Speed=GPIO_Speed_50MHz;
 GPIO_Init(GPIOA, &GPIO_InitStruct);     //GPIOA
 
-GPIO_InitStruct.GPIO_Mode=GPIO_Mode_Out_PP;
-GPIO_InitStruct.GPIO_Pin= GPIO_Pin_12;      //PIN12
-GPIO_InitStruct.GPIO_Speed=GPIO_Speed_50MHz;
-GPIO_Init(GPIOA, &GPIO_InitStruct);     //GPIOA
+//GPIO_InitStruct.GPIO_Mode=GPIO_Mode_Out_PP;
+//GPIO_InitStruct.GPIO_Pin= GPIO_Pin_12;      //PIN12
+//GPIO_InitStruct.GPIO_Speed=GPIO_Speed_50MHz;
+//GPIO_Init(GPIOA, &GPIO_InitStruct);     //GPIOA
 
 
-GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource11);  //GPIOA,PIN11
+GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource8);  //GPIOA,PIN8
 
 EXTI_InitStruct.EXTI_LineCmd=ENABLE;
-EXTI_InitStruct.EXTI_Line=EXTI_Line11;       //pin11
+EXTI_InitStruct.EXTI_Line=EXTI_Line8;       //pin8
 EXTI_InitStruct.EXTI_Mode=EXTI_Mode_Interrupt;
 EXTI_InitStruct.EXTI_Trigger=EXTI_Trigger_Falling;
 EXTI_Init(&EXTI_InitStruct);
 
-NVIC_InitStruct.NVIC_IRQChannel= EXTI15_10_IRQn;     //EXTI15_10_IRQHandler
+NVIC_InitStruct.NVIC_IRQChannel= EXTI9_5_IRQn;     //EXTI9_5_IRQHandler
 NVIC_InitStruct.NVIC_IRQChannelCmd=ENABLE;
 NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority=2;   //抢占优先级1
 NVIC_InitStruct.NVIC_IRQChannelSubPriority=2;          //响应优先级1
