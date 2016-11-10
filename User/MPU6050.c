@@ -114,8 +114,8 @@ EXTI_Init(&EXTI_InitStruct);
 
 NVIC_InitStruct.NVIC_IRQChannel= EXTI9_5_IRQn;     //EXTI9_5_IRQHandler
 NVIC_InitStruct.NVIC_IRQChannelCmd=ENABLE;
-NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority=2;   //抢占优先级1
-NVIC_InitStruct.NVIC_IRQChannelSubPriority=2;          //响应优先级1
+NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority=3;   //抢占优先级1
+NVIC_InitStruct.NVIC_IRQChannelSubPriority=3;          //响应优先级1
 NVIC_Init(&NVIC_InitStruct);
 }
 

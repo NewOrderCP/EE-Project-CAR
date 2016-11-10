@@ -76,7 +76,7 @@ void Pulse(int m1,int m2)
 			TIM3->CCR1=0;
 			TIM3->CCR2=0;
 //			GPIO_ResetBits(GPIOA,GPIO_Pin_4);
-			delay_ms(10);
+			delay_ms(1);
 //			GPIO_SetBits(GPIOA,GPIO_Pin_5);
 			t1=1;
 		}
@@ -89,7 +89,7 @@ void Pulse(int m1,int m2)
 			TIM3->CCR1=0;
 			TIM3->CCR2=0;
 //			GPIO_ResetBits(GPIOA,GPIO_Pin_5);
-			delay_ms(10);
+			delay_ms(1);
 //			GPIO_SetBits(GPIOA,GPIO_Pin_4);
 			t1=0;
 		}
@@ -103,7 +103,7 @@ void Pulse(int m1,int m2)
 			TIM3->CCR3=0;
 			TIM3->CCR4=0;
 //			GPIO_ResetBits(GPIOA,GPIO_Pin_7);
-			delay_ms(10);
+			delay_ms(1);
 //			GPIO_SetBits(GPIOA,GPIO_Pin_6);
 			t2=1;
 		}
@@ -116,7 +116,7 @@ void Pulse(int m1,int m2)
 			TIM3->CCR3=0;
 			TIM3->CCR4=0;
 //			GPIO_ResetBits(GPIOA,GPIO_Pin_6);
-			delay_ms(10);
+			delay_ms(1);
 //			GPIO_SetBits(GPIOA,GPIO_Pin_7);
 			t2=0;
 		}
