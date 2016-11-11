@@ -27,7 +27,11 @@ void GPIO_Configuration(void)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	GPIO_ResetBits(GPIOB,GPIO_Pin_9);
-
+	
+	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15;	
+	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;     	   //上拉输入
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
 }
 
 void PWM_Configuration(void)	 //配置PWM输出
@@ -80,7 +84,7 @@ void Pulse(int m1,int m2)
 //			GPIO_SetBits(GPIOA,GPIO_Pin_5);
 			t1=1;
 		}
-		TIM3->CCR1=m1;
+		TIM3->CCR2=m1;
 	}
 	else
 	{
@@ -93,7 +97,7 @@ void Pulse(int m1,int m2)
 //			GPIO_SetBits(GPIOA,GPIO_Pin_4);
 			t1=0;
 		}
-		TIM3->CCR2=-m1;
+		TIM3->CCR1=-m1;
 	}
 	
 	if(m2>=0)
@@ -107,7 +111,7 @@ void Pulse(int m1,int m2)
 //			GPIO_SetBits(GPIOA,GPIO_Pin_6);
 			t2=1;
 		}
-		TIM3->CCR3=m2;
+		TIM3->CCR4=m2;
 	}
 	else
 	{	
@@ -120,15 +124,15 @@ void Pulse(int m1,int m2)
 //			GPIO_SetBits(GPIOA,GPIO_Pin_7);
 			t2=0;
 		}
-		TIM3->CCR4=-m2;
+		TIM3->CCR3=-m2;
 	};
 }
 
 void go(int x,int pwm)	
 {
 	int m,n;
-	m=pwm+x;
-	n=pwm-x;
+	m=pwm-x;
+	n=pwm+x;
 	if(m<-1000)
 		m=-1000;
 	if(m>1000)

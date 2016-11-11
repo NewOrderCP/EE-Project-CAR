@@ -28,6 +28,8 @@ int cmd,cmd0;
 
 extern float angle;
 extern float dis1;
+int send=0,num=0,p=0;
+int speed=700;
 
 int main(void)
 {
@@ -65,6 +67,19 @@ int main(void)
 //	OLED_Fill(0x00);					//OLED全屏灭		
 	TIM1_Int_Init(999,7199);			//计时器初始化
 	
+	time_now=times;
+	while(times-time_now<2)
+	{
+		k1=dev(180);
+		k2=PID_calculate(&Control,k1);	
+		go(k2,0);	
+	}
+	
+	TIM3->CCR1=0;
+	TIM3->CCR2=0;
+	TIM3->CCR3=0;
+	TIM3->CCR4=0;
+
 		while(1)
 		{
 
@@ -81,9 +96,10 @@ int main(void)
 //			//超声波测距显示
 //			hc04_running();
 //			sprintf((char*)display1,"DIS: %f",dis1);
-//			OLED_ShowStr(0,6,display1,2);			
+//			OLED_ShowStr(0,6,display1,2);
+
 			
-			//蓝牙接收显示
+			//蓝牙接收显示	
 			if(USART2_RX_STA&0X8000)			//接收到一次数据了
 			{
 				reclen=USART2_RX_STA&0X7FFF;	//得到数据长度
@@ -95,30 +111,42 @@ int main(void)
 //				sprintf((char*)display1,"BT: %d",cmd);				
 //				OLED_ShowStr(0,0,display1,2);				
 			}
-			
-			
+						
+			send=(2-PBin(12))*1000+(2-PBin(13))*100+(2-PBin(14))*10+(2-PBin(15));
+			if(send!=1111&&cmd==111&&p==0)
+			{
+				while(num<200)
+				{
+					u2_printf("%d\r\n",send);			//发送到蓝牙模块
+					num++;
+					delay_ms(10);
+				}
+				speed=500;
+				p=1;
+			}
+						
 			//指令执行
 			switch(cmd)
 			{
 				case 100:								//方向0指令
 					k1=dev(0);
 					k2=PID_calculate(&Control,k1);	
-					go(k2,800);	
+					go(k2,speed);	
 					break;
 				case 190:							//方向90指令
 					k1=dev(90);
 					k2=PID_calculate(&Control,k1);	
-					go(k2,800);	
+					go(k2,speed);	
 					break;
 				case 180:							//方向180指令
 					k1=dev(180);
 					k2=PID_calculate(&Control,k1);	
-					go(k2,800);	
+					go(k2,speed);	
 					break;
 				case 270:							//方向270指令
 					k1=dev(270);
 					k2=PID_calculate(&Control,k1);	
-					go(k2,800);	
+					go(k2,speed);	
 					break;
 				
 				case 111:							//停止指令
@@ -130,9 +158,9 @@ int main(void)
 				
 				case 222:							//到达指定车库指令
 					GPIO_SetBits(GPIOB,GPIO_Pin_9);	//报警
-					delay_ms(1000);
+					delay_ms(250);
 					GPIO_ResetBits(GPIOB,GPIO_Pin_9);
-					delay_ms(1000);
+					delay_ms(250);
 					break;
 				
 				case 333:							//转向方向0指令
@@ -143,6 +171,10 @@ int main(void)
 						k2=PID_calculate(&Control,k1);	
 						go(k2,0);	
 					}
+					TIM3->CCR1=0;
+					TIM3->CCR2=0;
+					TIM3->CCR3=0;
+					TIM3->CCR4=0;
 					break;
 				case 444:							//转向方向90指令
 					time_now=times;
@@ -152,6 +184,10 @@ int main(void)
 						k2=PID_calculate(&Control,k1);	
 						go(k2,0);	
 					}
+					TIM3->CCR1=0;
+					TIM3->CCR2=0;
+					TIM3->CCR3=0;
+					TIM3->CCR4=0;
 					break;
 				case 555:							//转向方向180指令
 					time_now=times;
@@ -161,6 +197,10 @@ int main(void)
 						k2=PID_calculate(&Control,k1);	
 						go(k2,0);	
 					}
+					TIM3->CCR1=0;
+					TIM3->CCR2=0;
+					TIM3->CCR3=0;
+					TIM3->CCR4=0;
 					break;
 				case 666:							//转向方向270指令
 					time_now=times;
@@ -170,6 +210,10 @@ int main(void)
 						k2=PID_calculate(&Control,k1);	
 						go(k2,0);	
 					}
+					TIM3->CCR1=0;
+					TIM3->CCR2=0;
+					TIM3->CCR3=0;
+					TIM3->CCR4=0;
 					break;		
 			}
 			

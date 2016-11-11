@@ -8,6 +8,7 @@
 #include "HMC5883L.h"
 
 extern float angle;
+extern int change;
 
 float dev(int expect)
 {
