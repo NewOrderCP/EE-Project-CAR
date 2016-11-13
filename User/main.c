@@ -24,12 +24,12 @@ struct PID Control={300,0,250,0,0,0,0,0,0};
 extern int times;
 int times1,times2,time_now;
 float k1=0,k2;
-int cmd,cmd0;
+int cmd,cmd0,p222=1;
 
 extern float angle;
 extern float dis1;
 int send=0,num=0,p=0;
-int speed=700;
+int speed=500;
 
 int main(void)
 {
@@ -106,7 +106,7 @@ int main(void)
 				USART2_RX_BUF[reclen]=0;	 	//加入结束符
 				USART2_RX_STA=0;
 				cmd0=100*(USART2_RX_BUF[0]-48)+10*(USART2_RX_BUF[1]-48)+(USART2_RX_BUF[2]-48);	
-				if(cmd0==100||cmd0==190||cmd0==180||cmd0==270||cmd0==111||cmd0==222||cmd0==333||cmd0==444||cmd0==555||cmd0==666)
+				if(cmd0==100||cmd0==190||cmd0==180||cmd0==270||cmd0==111||cmd0==999||cmd0==333||cmd0==444||cmd0==555||cmd0==666)
 					cmd=cmd0;
 //				sprintf((char*)display1,"BT: %d",cmd);				
 //				OLED_ShowStr(0,0,display1,2);				
@@ -121,14 +121,13 @@ int main(void)
 					num++;
 					delay_ms(10);
 				}
-				speed=500;
 				p=1;
 			}
 						
 			//指令执行
 			switch(cmd)
 			{
-				case 100:								//方向0指令
+				case 100:							//方向0指令
 					k1=dev(0);
 					k2=PID_calculate(&Control,k1);	
 					go(k2,speed);	
@@ -156,11 +155,11 @@ int main(void)
 					TIM3->CCR4=0;
 					break;
 				
-				case 222:							//到达指定车库指令
-					GPIO_SetBits(GPIOB,GPIO_Pin_9);	//报警
-					delay_ms(250);
-					GPIO_ResetBits(GPIOB,GPIO_Pin_9);
-					delay_ms(250);
+				case 999:							//到达指定车库指令
+						GPIO_SetBits(GPIOB,GPIO_Pin_9);	//报警
+						delay_ms(250);
+						GPIO_ResetBits(GPIOB,GPIO_Pin_9);
+						delay_ms(250);
 					break;
 				
 				case 333:							//转向方向0指令
